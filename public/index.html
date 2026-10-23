@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="开放的佛典保存与阅读计划。保存原始文件、开放格式与独立恢复包，欢迎下载和传播。">
+  <meta name="theme-color" content="#1686e9">
+  <title>经藏 · 佛典留存计划</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="theme-blue.css">
+  <script src="config.js"></script>
+  <script type="module" src="app.js"></script>
+</head>
+<body>
+  <a class="skip" href="#main">跳至内容</a>
+  <aside class="sidebar">
+    <a class="brand" href="#"><span class="seal" aria-hidden="true">经</span><span>经藏<small>开放佛典档案</small></span></a>
+    <span class="side-label">开放获取 · 多处保存 · 随时恢复</span>
+    <nav aria-label="主导航">
+      <a href="#library" class="active" data-tab="library"><span>01</span> 经藏目录</a>
+      <a href="#packages" data-tab="packages"><span>02</span> 下载与镜像</a>
+      <a href="#preservation" data-tab="preservation"><span>03</span> 长久保存</a>
+    </nav>
+    <div class="sidebar-bottom"><span class="dot"></span> 开放阅读 · 欢迎传播<p>原件有据，文字可读。<br>不依赖某一个网站而存在。</p><a id="repo-link" href="https://github.com/Chanray-May9/dharma-archive">GitHub 仓库 ↗</a></div>
+  </aside>
+  <main id="main">
+    <header class="topbar"><span>开放佛典数字档案 / OPEN BUDDHIST ARCHIVE</span><a href="RECOVERY.txt">脱离网站恢复 ↗</a></header>
+    <section class="hero">
+      <div><p class="eyebrow">OPEN BUDDHIST ARCHIVE</p><h1>开放经藏。<br>为未来<span>保存。</span></h1><p class="intro">尽可能完整地汇集佛典，保留原件与不同版本。<br>多平台备份，开放格式，独立恢复。</p><a class="hero-link" href="#library">浏览经藏 <span>→</span></a></div>
+      <div class="hero-art" aria-hidden="true"><svg viewBox="0 0 280 260" fill="none"><circle cx="140" cy="130" r="106" fill="#EAF5FF"/><rect x="96" y="46" width="113" height="158" rx="13" fill="#D1E9FF"/><rect x="79" y="57" width="113" height="158" rx="13" fill="#A9D5FC"/><rect x="62" y="69" width="113" height="158" rx="13" fill="white" stroke="#54ABF3" stroke-width="2"/><rect x="82" y="94" width="42" height="7" rx="3.5" fill="#1686E9"/><path d="M82 120H153M82 137H153M82 154H141M82 171H147" stroke="#D4E6F7" stroke-width="5" stroke-linecap="round"/><circle cx="191" cy="188" r="30" fill="#1686E9"/><path d="m178 188 9 9 17-19" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="art-caption">PRESERVE · VERIFY · RECOVER</span></div>
+    </section>
+    <div class="stats" aria-live="polite"><div><strong id="stat-documents">—</strong><span>已归档文献文件</span></div><div><strong id="stat-languages">—</strong><span>收录语种</span></div><div><strong id="stat-packages">—</strong><span>独立恢复分包</span></div><div><strong>PAR2</strong><span>可修复的纠错数据</span></div></div>
+    <p class="coverage" id="coverage">正在载入实际归档范围……</p>
+    <section id="library" class="panel" aria-labelledby="library-title">
+      <div class="section-head"><div><p class="eyebrow">THE COLLECTION</p><h2 id="library-title">经藏目录</h2></div><p id="results-count" aria-live="polite">载入中</p></div>
+      <form id="search-form" class="filters" role="search"><label class="search"><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="搜索经名、编号、译者，如：心经、金刚、dn1" aria-label="搜索经名、编号或译者"></label><label><span class="sr-only">语种</span><select id="language"><option value="">全部语种</option></select></label><label><span class="sr-only">经藏</span><select id="collection"><option value="">全部经藏</option></select></label><button type="submit">检索</button></form>
+      <div class="table-wrap"><table><thead><tr><th>文献 / DOCUMENT</th><th>语种</th><th>经藏</th><th>访问</th></tr></thead><tbody id="catalog-body"></tbody></table></div>
+      <p id="empty" hidden>没有匹配的文献。可尝试繁体字、其他经名或文献编号。</p>
+      <div class="pagination"><button id="previous" disabled>← 上一页</button><span id="page-number"></span><button id="next" disabled>下一页 →</button></div>
+    </section>
+    <section id="packages" class="panel" hidden aria-labelledby="packages-title">
+      <div class="section-head"><div><p class="eyebrow">COPIES WITHOUT BOUNDARIES</p><h2 id="packages-title">下载与镜像</h2></div></div>
+      <p class="section-intro">每个 ZIP 包都包含原始经文、UTF-8 阅读副本、来源版本和 SHA-256 校验清单。无需本网站、账号或数据库即可解压恢复。</p>
+      <div class="mirror-grid"><a id="github-mirror" href="https://github.com/Chanray-May9/dharma-archive">GitHub 仓库<span>浏览全部文件 ↗</span></a><a id="cloud-mirror" href="#">Cloudflare 文件镜像<span>访问独立后端 ↗</span></a><a href="manifest-sha256.txt">校验清单<span>SHA-256 · 纯文本 ↗</span></a><a href="data/catalog.csv">通用目录<span>CSV · 可离线读取 ↗</span></a></div>
+      <div class="package-toolbar"><label for="package-search">筛选恢复包</label><input id="package-search" type="search" placeholder="例如 cbeta-T08 或 sc-pli"></div>
+      <div id="package-list" class="package-list"></div><button id="more-packages" hidden>显示更多恢复包</button>
+    </section>
+    <section id="preservation" class="panel" hidden aria-labelledby="preservation-title">
+      <div class="section-head"><div><p class="eyebrow">A PRACTICE, NOT A PROMISE</p><h2 id="preservation-title">保存是一件持续的事</h2></div></div>
+      <div class="principles"><article><span>一</span><h3>先保留原件</h3><p>原始 XML、JSON 按字节保存在恢复包中，记录来源提交版本和校验值。纯文本是便于阅读的派生副本，不能代替原件中的校勘与结构。</p></article><article><span>二</span><h3>不把钥匙交给网站</h3><p>ZIP、TXT、JSONL、CSV 和纯文本恢复说明都能离线打开。前端或 API 消失后，直接从文件镜像、仓库或离线硬盘取回即可。</p></article><article><span>三</span><h3>让副本分散存在</h3><p>云端副本之外，还需要分处不同地点的离线硬盘或其他介质。定期核对校验值、试做恢复，并在介质或格式老化之前迁移。</p></article></div>
+      <div class="preservation-note"><h3>关于“全部佛经”与千年留存</h3><p>世界佛典没有一份完整且固定的数字总目录。本档案如实记录已经获取的文件，尚未覆盖的语种、手稿、图像和版本持续列入来源清单。云服务没有千年存续保证；长期保存依赖多方持有、持续维护和代际交接。</p><a href="RECOVERY.txt">阅读离线恢复说明 →</a> <a href="data/sources.json">查看来源与版本 →</a></div>
+    </section>
+    <footer><span>经藏 · 佛典留存计划</span><span>欢迎下载、复制、传播。来源与版本说明随文件保存。</span><a href="data/status.json">实际归档范围 ↗</a></footer>
+  </main>
+  <dialog id="reader"><div class="reader-top"><span id="reader-id"></span><button id="close-reader" autofocus>关闭 ×</button></div><h2 id="reader-title"></h2><div class="reader-links"><a id="download-text" download>下载 TXT ↓</a><a id="download-original">原件恢复包 ↓</a><a id="original-source" target="_blank" rel="noreferrer">来源版本 ↗</a></div><p id="reader-state" role="status"></p><pre id="reader-text"></pre></dialog>
+  <noscript><p>JavaScript 已关闭。可直接下载 <a href="data/catalog.csv">CSV 目录</a>，或参照 <a href="RECOVERY.txt">恢复说明</a>读取经文。文件访问不依赖 JavaScript。</p></noscript>
+</body>
+</html>

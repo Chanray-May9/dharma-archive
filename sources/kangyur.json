@@ -1,0 +1,11 @@
+{
+  "id": "derge-kangyur",
+  "name": "德格甘珠尔 / Esukhia Digital Derge Kangyur",
+  "repository": "https://github.com/Esukhia/derge-kangyur",
+  "root": "work/derge-kangyur",
+  "tree": "work/kangyur-tree.json",
+  "prefix": "text/",
+  "language": "bod",
+  "license": "Public domain; upstream README License section",
+  "coverage": "All text/ files in the pinned repository snapshot; volume 103 catalog was not digitized by this upstream project"
+}

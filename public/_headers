@@ -1,0 +1,14 @@
+/data/*
+  Access-Control-Allow-Origin: *
+  X-Content-Type-Options: nosniff
+  Cache-Control: public, max-age=3600
+/data/packages/*
+  Content-Type: application/zip
+/data/texts/*
+  Content-Type: text/plain; charset=utf-8
+/RECOVERY.txt
+  Content-Type: text/plain; charset=utf-8
+/*
+  Referrer-Policy: no-referrer
+  X-Content-Type-Options: nosniff
+  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self'; connect-src 'self' https://*.workers.dev https://chanray-may9.github.io; object-src 'none'; base-uri 'self'; frame-ancestors 'none'

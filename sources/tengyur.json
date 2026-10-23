@@ -1,0 +1,11 @@
+{
+  "id": "derge-tengyur",
+  "name": "德格丹珠尔 / Esukhia Digital Derge Tengyur",
+  "repository": "https://github.com/Esukhia/derge-tengyur",
+  "root": "work/derge-tengyur",
+  "tree": "work/tengyur-tree.json",
+  "prefix": "text/",
+  "language": "bod",
+  "license": "Public domain; upstream README License section",
+  "coverage": "All text/ files in the pinned repository snapshot; upstream electronic edition, not all historical Tibetan editions"
+}

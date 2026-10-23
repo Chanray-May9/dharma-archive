@@ -1,0 +1,11 @@
+{
+  "name": "dharma-archive",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/worker.test.mjs",
+    "verify": "python tools/verify.py public",
+    "deploy": "wrangler deploy"
+  }
+}

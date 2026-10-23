@@ -1,0 +1,12 @@
+{
+  "id": "gretil-buddhist",
+  "name": "GRETIL 梵文佛教文献选集",
+  "repository": "https://github.com/INDOLOGY/GRETIL-mirror",
+  "root": "work/gretil",
+  "tree": "work/gretil-selected-tree.json",
+  "prefix": "gretil.sub.uni-goettingen.de/gretil/corpustei/",
+  "language": "san",
+  "kind": "tei",
+  "license": "CC-BY-NC-SA-4.0; retain each original TEI licence and bibliography",
+  "coverage": "225 source TEI files selected by Buddhist classification in tokushige-koyasan/gretil-corpus catalog; selection catalog retained, classification may need further review"
+}

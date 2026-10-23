@@ -1,0 +1,86 @@
+经藏 / DHARMA ARCHIVE — 离线恢复说明 / OFFLINE RECOVERY
+================================================================
+
+本说明采用 UTF-8。No website, account, API or database is needed.
+
+1. 最简单的阅读方式 / READ
+   解压恢复包，用支持 UTF-8 的文本编辑器打开包内 data/reading/*.txt。
+   或运行：python RESTORE.py . --output recovered
+   恢复后可直接打开 recovered/texts/*.txt，不需要网站。
+   data/catalog.csv 和 data/catalog/ 下的 JSON、JSONL 是通用文献目录。
+   文件数包括分段和版本，并不等于独立经书数。
+
+2. 恢复原件 / RESTORE ORIGINALS
+   解压 data/packages/*.zip。每个包独立，内部结构：
+   data/original/    来源 XML 或 JSON，原始字节不作更改。
+   data/reading/     可读的 UTF-8 TXT 副本。
+   data/notices/     来源说明、授权全文、格式规范。
+   data/source.json 固定来源提交版本、收录范围和时间。
+   manifest-sha256.txt  每行：64 个十六进制字符、两个空格、相对路径。
+   bagit.txt         BagIt 1.0 标识；一般解压工具即可操作，无需专用工具。
+
+   data/catalog.csv 的 package_path、original_member 字段可定位原件，
+   text_member 字段可定位包内的纯文本阅读副本。
+   同一文件的不同版本不应混为一份；对照 source_revision 和 SHA-256。
+
+3. 校验 / VERIFY
+   在此目录运行：python verify.py . --deep
+   单个 ZIP：python verify.py data/packages/NAME.zip
+   Python 3 标准库即可，无需安装任何依赖或联网。
+   如果没有 Python，解压后用其他 SHA-256 工具检查清单。
+   Unix: sha256sum -c manifest-sha256.txt
+   ZIP 使用 DEFLATE，任何兼容 ZIP 的解压程序都应能读取。
+
+4. 损坏怎么办 / REPAIR
+   SHA-256 用来发现错误。data/recovery/*.par2 是真实的 Reed-Solomon
+   纠错数据，约 35% 冗余；具体参数和恢复实测见 PROTECTION.json。
+   使用兼容 PAR2 的工具，在此目录执行：
+   par2 repair -B. data/recovery/dharma.par2
+   然后执行 python verify.py . --deep 再检查一次。
+   可恢复的损坏量以尚存恢复块为准，不是固定比例的文件数量。
+   恢复工具源码保存在 data/toolkit/，未来可移植并重新编译。
+   若损坏超出恢复能力，从另一镜像或离线介质取回相同版本后再校验。
+   尽量同时保留镜像地址、完整文件、清单和清单本身的校验值。
+   即使全部网站消失，只要尚有一份完整副本，仍可读取和继续复制。
+
+5. 不要只保存本网页 / WHAT TO KEEP
+   完整 data/ 目录、manifest-sha256.txt、bagit.txt、bag-info.txt、
+   本 RECOVERY.txt、verify.py、RESTORE.py。建议整个目录一并复制。
+   GitHub 仓库保存于 https://github.com/Chanray-May9/dharma-archive
+   完整 Cloudflare 文件镜像：
+   https://dharma-archive-api.gqr20080509.workers.dev/
+   GitHub 分片仓库的逐文件地址见 data/mirrors.json。
+   所有镜像的当前地址和核验情况另见仓库 DEPLOYMENT.json / MIRRORS.md。
+   地址失效不影响已经下载的文件。
+
+6. 解码和格式 / FORMATS
+   字符编码：UTF-8；文件名尽量使用 ASCII；换行一般为 LF。
+   RFC3629-UTF8.txt 随恢复包保存，说明 UTF-8 字节编码。
+   JSON 为文本键值结构；JSONL 每行一个独立 JSON；CSV 为逗号分隔表格。
+   XML 为带标签的文本。CBETA 的 schema 和 charDecl 保存结构及缺字说明。
+   阅读副本的 [CBxxxx] 是缺字标识，不是正文缺失的自动补写。
+   XML 原件包括校勘和注释，派生 TXT 不能替代原件。
+
+7. 版本与传播 / PROVENANCE AND SHARING
+   欢迎下载、复制、传播。不要删除来源版本、原始文件头和随附条款。
+   CBETA 按每份 XML 原始 availability 文件头保存条件，不统一重贴授权。
+   原始非商业再传播说明、不同 CC 条款和总版权说明均随档案保留。
+   古代原典、数字整理成果和现代译本的适用条件可能不同。
+   原件中的具体说明保留在包内，避免依赖未来可能消失的网页。
+
+8. 留给未来 / LONG-TERM CARE
+   云端没有万年保证。将文件交给多个独立持有人，并留异地离线副本。
+   定期检查 SHA-256；保留多代清单；每年试恢复；评估介质与格式迁移。
+   发现散列算法老化时增加新算法清单，同时保留旧清单与迁移记录。
+   本档案不是世界全部佛教文献；实际范围见 data/status.json。
+
+ENGLISH SUMMARY
+   Unzip data/packages/*.zip for exact originals and UTF-8 reading copies.
+   Every ZIP carries originals, reading copies, source revisions, notices and
+   a SHA-256 manifest. Verify using Python 3: python verify.py . --deep
+   Keep data/, the manifests, this document and verify.py together.
+   PAR2 recovery blocks can rebuild damaged or missing data within capacity.
+   Run: par2 repair -B. data/recovery/dharma.par2
+   Check again using SHA-256, then use RESTORE.py to extract all original texts.
+   There is no promise of permanent hosting or complete worldwide coverage.
+   Preserve source terms and version metadata when redistributing.

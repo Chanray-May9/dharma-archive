@@ -1,0 +1,11 @@
+.wrangler/
+node_modules/
+work/
+*.log
+__pycache__/
+.env
+receipts/private/
+public/data/packages/*.zip
+public/data/upstream/*.part-*
+public/data/recovery/*.par2
+pages-site/
