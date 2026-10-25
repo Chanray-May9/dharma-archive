@@ -23,7 +23,7 @@
       "url": "https://dharma-archive-api.gqr20080509.workers.dev",
       "state": "all_850_payload_files_independently_read_back_sha256_verified_without_alternate_platform_fallback",
       "core_version_id": "dfd7fcc0-9650-450f-8c82-c3a92fdf3b7c",
-      "frontend_version_id": "8480a74c-8c14-4019-93c7-b83d3a4eda16",
+      "frontend_version_id": "21ae8f45-b7ae-4738-9b2d-b00ced12c6be",
       "receipt": "receipts/cloudflare-readback.json"
     },
     "codeberg": {
@@ -52,6 +52,12 @@
     "gitlab": "Sign-in blocked by HTTP 403 or security verification.",
     "hugging_face": "Sign-in blocked by HTTP 403 or security verification.",
     "osf": "Registration endpoint returned HTTP 403."
+  },
+  "frontend": {
+    "pages": ["index.html", "library.html", "languages.html", "packages.html", "recovery.html", "reader.html"],
+    "chinese_display": "Simplified reading by default using the repository-local OpenCC 1.4.2 bundle; original archive bytes and hashes unchanged.",
+    "primary_reading_storage": "Owned Chanray-May9 data repositories and owned Cloudflare assets; upstream source links are for provenance only.",
+    "local_browser_tests": "All 38 language cards, dedicated routes, reload, simplified/traditional search and reader switching, simplified TXT download, owned ZIP URLs, corruption failover, and 390px mobile layout passed."
   },
   "remote_audit": {
     "url": "https://github.com/Chanray-May9/dharma-archive/actions/runs/40175308677",
