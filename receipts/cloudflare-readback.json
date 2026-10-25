@@ -1,0 +1,12 @@
+{
+  "base": "https://dharma-archive-api.gqr20080509.workers.dev",
+  "action": "check",
+  "time_utc": "2026-10-25T08:07:44.145229+00:00",
+  "scope": "all_payload_files",
+  "alternate_urls_allowed": false,
+  "manifest_sha256": "3f147f96d93d996abcf617d7042f58fd9e0f47d2d6d4995155e0801acd2ab5af",
+  "verified": 850,
+  "expected": 850,
+  "failures": [],
+  "ok": true
+}

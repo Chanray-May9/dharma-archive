@@ -20,7 +20,7 @@
 - GitHub 仓库：<https://github.com/Chanray-May9/dharma-archive>
 - GitHub Pages：<https://chanray-may9.github.io/dharma-archive/>
 - Codeberg 公版 / CC0 原典子集：<https://codeberg.org/chanray-dharma-archive/buddhist-public-domain-texts>
-- Internet Archive 分片快照：<https://archive.org/details/chanray-dharma-archive-buddhist-texts-20261023>；公开入库与读回核验结果以部署回执为准。
+- Internet Archive 完整分片快照：<https://archive.org/details/chanray-dharma-archive-buddhist-texts-20261023>；124 个 TAR 分片已完整读回并通过 SHA-256 校验。
 - Cloudflare 地址以 `DEPLOYMENT.json` 的实际部署回执为准。
 - 不运行网页：直接打开 `public/RECOVERY.txt`、`public/data/catalog.csv`，解压 `public/data/packages/*.zip`；纯文本位于包内 `data/reading/`。
 - 每个分包自身含原件、阅读副本、来源说明和 SHA-256 清单，可单独恢复。

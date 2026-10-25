@@ -1,0 +1,10 @@
+{
+  "base": "https://archive.org/download/chanray-dharma-archive-buddhist-texts-20261023/",
+  "scope": "all_distribution_parts",
+  "ok": true,
+  "verified": 124,
+  "bytes": 2076057600,
+  "manifest_sha256": "247c7656d3432e4148b9f5f7602372015f880d57dc14e4c5d03b4a036ec44acd",
+  "payload_manifest_sha256": "3f147f96d93d996abcf617d7042f58fd9e0f47d2d6d4995155e0801acd2ab5af",
+  "time_utc": "2026-10-25T08:09:02.899679+00:00"
+}

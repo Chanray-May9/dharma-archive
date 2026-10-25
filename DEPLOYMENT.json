@@ -21,8 +21,10 @@
     },
     "cloudflare": {
       "url": "https://dharma-archive-api.gqr20080509.workers.dev",
-      "state": "complete_assets_deployed_pending_full_readback",
-      "core_version_id": "dfd7fcc0-9650-450f-8c82-c3a92fdf3b7c"
+      "state": "all_850_payload_files_independently_read_back_sha256_verified_without_alternate_platform_fallback",
+      "core_version_id": "dfd7fcc0-9650-450f-8c82-c3a92fdf3b7c",
+      "frontend_version_id": "8480a74c-8c14-4019-93c7-b83d3a4eda16",
+      "receipt": "receipts/cloudflare-readback.json"
     },
     "codeberg": {
       "url": "https://codeberg.org/chanray-dharma-archive/buddhist-public-domain-texts",
@@ -36,12 +38,13 @@
     },
     "internet_archive": {
       "url": "https://archive.org/details/chanray-dharma-archive-buddhist-texts-20261023",
-      "state": "all_files_publicly_ingested_server_md5_and_size_verified_full_readback_pending",
+      "state": "all_files_publicly_ingested_and_all_124_tar_parts_independently_read_back_sha256_verified",
       "files": 126,
       "tar_parts": 124,
       "tar_members_locally_verified": 862,
       "distribution_manifest_sha256": "247c7656d3432e4148b9f5f7602372015f880d57dc14e4c5d03b4a036ec44acd",
-      "receipt": "receipts/ia-server-checksums.json"
+      "receipt": "receipts/ia-readback.json",
+      "additional_receipt": "receipts/ia-server-checksums.json"
     }
   },
   "not_counted_as_backups": {
@@ -50,5 +53,10 @@
     "hugging_face": "Sign-in blocked by HTTP 403 or security verification.",
     "osf": "Registration endpoint returned HTTP 403."
   },
-  "verification_notes": "Server-reported checksums and sampled readback are explicitly distinguished from independently downloading all bytes. Monthly GitHub Actions audits check complete GitHub, Cloudflare and Internet Archive payloads. Immutable data/mirrors.json records build-time prepared states, not live status."
+  "remote_audit": {
+    "url": "https://github.com/Chanray-May9/dharma-archive/actions/runs/40175308677",
+    "conclusion": "success",
+    "jobs": ["payload (github)", "payload (cloudflare)", "internet-archive"]
+  },
+  "verification_notes": "GitHub and Cloudflare each passed independent SHA-256 readback of all 850 payload files. Internet Archive passed independent SHA-256 readback of every one of the 124 TAR parts (2076057600 bytes); all 862 TAR members were locally checked against original files before upload. Codeberg has remote commit confirmation and an 18-file readback sample, not full byte readback. Monthly GitHub Actions repeat the three complete replica audits. Immutable data/mirrors.json records build-time prepared states, not live status."
 }
