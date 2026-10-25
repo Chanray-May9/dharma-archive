@@ -148,6 +148,7 @@ const server = http.createServer((request, response) => {
     assert.deepEqual(upstreamFetches, []);
     assert.deepEqual(errors, []);
     const receipt = { ok: true, dedicated_pages: ['library', 'languages', 'packages', 'recovery', 'reader'], languages: 38, simplified_traditional_search: 'passed', simplified_reader_and_txt: 'passed', direct_reader_reload: 'passed', original_package_owner: 'Chanray-May9', upstream_fetches: upstreamFetches, corrupt_primary_shard_fallback: shardFallbackObserved, mobile_width: 390, browser_errors: errors };
+    Object.assign(receipt, { reader_flow_width_at_2560px: wideLayout.width, reader_right_gap: wideLayout.rightGap, paragraph_and_verse_structure: 'passed', section_numbers_hidden_by_default: 'passed', section_numbers_opt_in_without_duplication: 'passed', original_body_numbers_preserved: 'passed' });
     fs.writeFileSync(path.join(output, 'browser-qa.json'), JSON.stringify(receipt, null, 2) + '\n');
     console.log(JSON.stringify(receipt));
   } finally {
