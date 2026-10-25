@@ -69,6 +69,26 @@ const server = http.createServer((request, response) => {
     await page.waitForURL('**/reader.html?**');
     await page.waitForFunction(() => document.querySelector('#reader-state').textContent.includes('校验通过'));
     assert.match(await page.locator('#reader-text').innerText(), /观自在菩萨/);
+    assert.equal(await page.locator('#reader-text').getAttribute('data-layout'), 'flow');
+    assert.match(await page.locator('#reader-text').innerText(), /育民者法其法也/);
+    await page.setViewportSize({ width: 2560, height: 1440 });
+    const wideLayout = await page.locator('#reader-text').evaluate((node) => {
+      const bounds = node.getBoundingClientRect();
+      return { width: bounds.width, rightGap: innerWidth - bounds.right, lineHeight: getComputedStyle(node).lineHeight };
+    });
+    assert.ok(wideLayout.width > 2100);
+    assert.ok(wideLayout.rightGap <= 65);
+    assert.equal(wideLayout.lineHeight, '30.6px');
+    await page.screenshot({ path: path.join(output, 'dharma-reader-wide.png') });
+    const xmlLayout = await page.evaluate(async () => {
+      const { formatXmlReading } = await import('./reader-layout.js');
+      const xml = '<TEI xmlns="http://www.tei-c.org/ns/1.0" xmlns:cb="http://www.cbeta.org/ns/1.0"><text><body><cb:mulu>七二九</cb:mulu><head>七二九</head><p>数字七二九是正文。\n<lb/>后续正文。</p><p>第二段。</p><lg><l>第一诗行</l><l>第二诗行</l></lg></body></text></TEI>';
+      return { clean: formatXmlReading(xml), numbered: formatXmlReading(xml, { showSectionNumbers: true }), byline: formatXmlReading('<TEI><text><body><byline>玄奘译</byline><p>经文正文</p></body></text></TEI>') };
+    });
+    assert.equal(xmlLayout.clean, '数字七二九是正文。后续正文。\n\n第二段。\n\n第一诗行\n第二诗行');
+    assert.equal(xmlLayout.numbered, '七二九\n\n' + xmlLayout.clean);
+    assert.equal(xmlLayout.byline, '玄奘译\n\n经文正文');
+    await page.setViewportSize({ width: 1440, height: 1000 });
     assert.match(await page.locator('#download-original').getAttribute('href'), /^https:\/\/raw\.githubusercontent\.com\/Chanray-May9\/dharma-archive-data-001\/main\/data\/packages\//);
     await page.locator('#script-mode').selectOption('original');
     assert.match(await page.locator('#reader-text').innerText(), /觀自在菩薩/);
@@ -113,6 +133,17 @@ const server = http.createServer((request, response) => {
     await page.waitForURL('**/recovery.html');
     assert.equal(await page.getByText('保存是一件持续的事').count(), 0);
     assert.equal(await page.locator('a[href="RESTORE.py"]').count(), 1);
+    await page.goto(base + 'reader.html?id=cbeta%3AB06n0007&script=simplified');
+    await page.waitForFunction(() => document.querySelector('#reader-text')?.dataset.layout === 'flow');
+    assert.doesNotMatch(await page.locator('#reader-text').innerText(), /七二九七二九|七三〇七三〇|七三一七三一/);
+    assert.doesNotMatch(await page.locator('#reader-text').innerText(), /(?:^|\n)七二九(?:\n|$)/);
+    await page.locator('#show-section-numbers').check();
+    assert.match(await page.locator('#reader-text').innerText(), /\n七二九\n/);
+    assert.doesNotMatch(await page.locator('#reader-text').innerText(), /七二九七二九/);
+    await page.locator('#show-section-numbers').uncheck();
+    await page.locator('#layout-mode').selectOption('original');
+    assert.match(await page.locator('#reader-text').innerText(), /七二九七二九/);
+    await page.locator('#layout-mode').selectOption('flow');
     const upstreamFetches = fetches.filter((url) => !url.startsWith('http://127.0.0.1:') && !url.startsWith('https://dharma-archive-api.gqr20080509.workers.dev/') && !url.startsWith('https://raw.githubusercontent.com/Chanray-May9/'));
     assert.deepEqual(upstreamFetches, []);
     assert.deepEqual(errors, []);

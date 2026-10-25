@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node --test tests/worker.test.mjs",
+    "test": "node --test tests/*.test.mjs",
     "verify": "python tools/verify.py public",
     "deploy": "wrangler deploy"
   }

@@ -1,3 +1,5 @@
+import { extractZipMember, formatXmlReading } from './reader-layout.js';
+
 const select = (selector) => document.querySelector(selector);
 const config = window.ARCHIVE_CONFIG || {};
 const currentPage = document.body.dataset.page;
@@ -7,7 +9,7 @@ const number = new Intl.NumberFormat('zh-CN');
 const localURL = (path) => new URL(path, document.baseURI).href;
 const backendURL = (path) => config.apiBase ? `${config.apiBase.replace(/\/$/, '')}/${path}` : localURL(path);
 const fileURL = (path) => config.apiBase && location.hostname.endsWith('github.io') ? backendURL(path) : localURL(path);
-const state = { catalog: [], filtered: [], page: 0, pageSize: 40, packages: [], packageLimit: 40, mirrors: { files: {}, rules: [] }, originalText: '', readerRecord: null, searchCache: new Map() };
+const state = { catalog: [], filtered: [], page: 0, pageSize: 40, packages: [], packageLimit: 40, mirrors: { files: {}, rules: [] }, originalText: '', originalXml: '', readerRecord: null, searchCache: new Map() };
 let scriptMode = params.get('script');
 if (!['simplified', 'original'].includes(scriptMode)) {
   try { scriptMode = localStorage.getItem('dharma-script'); } catch {}
@@ -169,15 +171,37 @@ async function readTextBytes(record) {
   throw failure || new Error('读取失败，请下载原件恢复包。');
 }
 
+async function loadOriginalXml(record) {
+  const urls = [...new Set([fileURL(record.package_path), localURL(record.package_path), ...(config.apiBase ? [backendURL(record.package_path)] : []), ...mirrorURLs(record.package_path)])];
+  for (const url of urls) {
+    try {
+      const response = await fetch(url, { signal: AbortSignal.timeout(30000) });
+      if (!response.ok) continue;
+      const bytes = await extractZipMember(await response.arrayBuffer(), record.original_member);
+      const digest = await crypto.subtle.digest('SHA-256', bytes);
+      const actual = Array.from(new Uint8Array(digest), (value) => value.toString(16).padStart(2, '0')).join('');
+      if (actual !== record.original_sha256) continue;
+      const xml = new TextDecoder('utf-8', { fatal: true }).decode(bytes);
+      formatXmlReading(xml);
+      return xml;
+    } catch {}
+  }
+  return '';
+}
+
 function renderReader() {
   const record = state.readerRecord;
   if (!record) return;
   const converted = scriptMode === 'simplified' && ['lzh', 'zh'].includes(record.language);
   const title = converted ? simplify(record.title) : record.title;
   const text = converted ? simplify(state.originalText) : state.originalText;
+  const flowing = select('#layout-mode').value === 'flow' && Boolean(state.originalXml);
+  const layout = flowing ? formatXmlReading(state.originalXml, { showSectionNumbers: select('#show-section-numbers').checked }) : state.originalText;
+  const displayed = converted ? simplify(layout) : layout;
   select('#reader-title').textContent = title;
   document.title = `${title} · 经藏`;
-  select('#reader-text').textContent = text;
+  select('#reader-text').textContent = displayed;
+  select('#reader-text').dataset.layout = flowing ? 'flow' : 'original';
   select('#reader-state').textContent = `原阅读文本 SHA-256 校验通过 · ${converted ? '简体转换显示' : '原文显示'}`;
   const download = select('#download-text');
   if (download.dataset.objectUrl) URL.revokeObjectURL(download.dataset.objectUrl);
@@ -201,6 +225,14 @@ async function setupReader() {
   select('#download-original').href = mirrorURLs(record.package_path)[0] || fileURL(record.package_path);
   select('#original-source').href = record.source_url;
   state.originalText = new TextDecoder('utf-8', { fatal: true }).decode(await readTextBytes(record));
+  if (record.source === 'cbeta' && record.original_member.endsWith('.xml')) state.originalXml = await loadOriginalXml(record);
+  if (!state.originalXml) {
+    select('#layout-mode').value = 'original';
+    select('#layout-mode').disabled = true;
+    select('#show-section-numbers').disabled = true;
+  }
+  select('#layout-mode').addEventListener('change', renderReader);
+  select('#show-section-numbers').addEventListener('change', renderReader);
   state.readerRecord = record;
   renderReader();
 }
