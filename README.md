@@ -19,6 +19,8 @@
 
 - GitHub 仓库：<https://github.com/Chanray-May9/dharma-archive>
 - GitHub Pages：<https://chanray-may9.github.io/dharma-archive/>
+- Codeberg 公版 / CC0 原典子集：<https://codeberg.org/chanray-dharma-archive/buddhist-public-domain-texts>
+- Internet Archive 分片快照：<https://archive.org/details/chanray-dharma-archive-buddhist-texts-20261023>；公开入库与读回核验结果以部署回执为准。
 - Cloudflare 地址以 `DEPLOYMENT.json` 的实际部署回执为准。
 - 不运行网页：直接打开 `public/RECOVERY.txt`、`public/data/catalog.csv`，解压 `public/data/packages/*.zip`；纯文本位于包内 `data/reading/`。
 - 每个分包自身含原件、阅读副本、来源说明和 SHA-256 清单，可单独恢复。
@@ -57,6 +59,10 @@ python tools/mirror.py download --base https://YOUR-MIRROR/ --output restored --
 python tools/verify.py restored --deep
 ```
 
+`tools/mirror.py check` 默认只核验指定镜像，不能用其他平台的正确副本掩盖当前平台的文件丢失或损坏。核验 GitHub 主仓库与三个分片的联合布局时显式添加 `--allow-shards`；下载恢复模式自动使用已登记的备用位置。
+
+Internet Archive 使用标准 TAR 的原始字节分片，不是另一种私有压缩格式。按照 `DISTRIBUTION.json` 列出的顺序拼接各片，即可用通用 TAR 工具解出完整目录；分片清单 SHA-256 为 `247c7656d3432e4148b9f5f7602372015f880d57dc14e4c5d03b4a036ec44acd`。不应使用文本模式拼接二进制分片。
+
 校验发现损坏，PAR2 纠错数据用于重建丢失或损坏的块。本档案额外生成约 35% 的 Reed–Solomon 恢复数据，位于 `public/data/recovery/`。使用全部恢复块时，修复能力按块计算，不能简单理解为任意 35% 文件；源块和恢复块同时丢失会降低能力。实际创建参数和“整包丢失＋另一包损坏”的实测结果见 `PROTECTION.json`。恢复工具源码随档案保存。
 
 ```sh
@@ -70,6 +76,8 @@ python public/RESTORE.py public --output recovered
 `SOURCES.md` 列出发现的来源；`MIRRORS.md` 区分已部署、可配置和缺少账号的平台。脚本不会自动注册账号、开启计费或上传到未经配置的账户。R2 不会自动启用，因为其免费额度属于按量计费订阅，并非硬性零费用上限。
 
 本次 Worker 静态资源按免费上限检查：少于 19,500 文件、每文件少于 24 MiB。动态接口额度依账户方案而定；经文静态访问独立于 Worker API。后续超过阈值必须拆成新的归档分片及仓库，不覆盖旧快照。
+
+`.github/workflows/audit-replicas.yml` 每月独立读回 GitHub、Cloudflare 与 Internet Archive 的全部归档载荷，也可手动运行。检查失败会让对应任务失败；GitHub 的失败通知取决于账号通知设置。核验回执与 Actions 临时 artifact 不是额外的长期数据副本。免费平台可能调整条款、停用账号或停止服务，仍需异地离线副本与持续的维护人交接。
 
 ## 重建
 

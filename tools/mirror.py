@@ -24,6 +24,7 @@ def main():
     parser.add_argument('--manifest-sha256', required=True)
     parser.add_argument('--workers', type=int, default=6)
     parser.add_argument('--packages-only', action='store_true')
+    parser.add_argument('--allow-shards', action='store_true', help='Allow registered alternate URLs during checks; downloads always allow them')
     args = parser.parse_args()
     manifest = retrieve(args.base, 'manifest-sha256.txt')
     if hashlib.sha256(manifest).hexdigest() != args.manifest_sha256:
@@ -43,7 +44,11 @@ def main():
             return name, 'existing'
         try:
             content = retrieve(args.base, name)
+            if hashlib.sha256(content).hexdigest() != digest:
+                raise ValueError(f'Remote checksum mismatch: {name}')
         except Exception as original_error:
+            if args.action == 'check' and not args.allow_shards:
+                raise
             alternatives = [item['url'] for item in registry.get('files', {}).get(name, [])]
             alternatives += [rule['base'].rstrip('/') + '/' + name for rule in registry.get('rules', []) if name.startswith(rule['prefix'])]
             content = None
@@ -51,6 +56,9 @@ def main():
                 try:
                     with urlopen(Request(url, headers={'User-Agent': 'DharmaArchiveMirror/0.1'}), timeout=180) as response:
                         content = response.read()
+                    if hashlib.sha256(content).hexdigest() != digest:
+                        content = None
+                        continue
                     break
                 except Exception:
                     continue
@@ -81,7 +89,7 @@ def main():
         (args.output / 'manifest-sha256.txt').write_bytes(manifest)
         for name in ['bagit.txt', 'bag-info.txt', 'RECOVERY.txt', 'verify.py']:
             (args.output / name).write_bytes(retrieve(args.base, name))
-    receipt = {'base': args.base, 'action': args.action, 'time_utc': datetime.now(timezone.utc).isoformat(), 'scope': 'packages_only' if args.packages_only else 'all_payload_files', 'manifest_sha256': args.manifest_sha256, 'verified': verified, 'expected': len(selected), 'failures': failures, 'ok': not failures}
+    receipt = {'base': args.base, 'action': args.action, 'time_utc': datetime.now(timezone.utc).isoformat(), 'scope': 'packages_only' if args.packages_only else 'all_payload_files', 'alternate_urls_allowed': args.action == 'download' or args.allow_shards, 'manifest_sha256': args.manifest_sha256, 'verified': verified, 'expected': len(selected), 'failures': failures, 'ok': not failures}
     (args.output / 'mirror-receipt.json').write_text(json.dumps(receipt, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
     print(json.dumps(receipt, ensure_ascii=False))
     if failures:

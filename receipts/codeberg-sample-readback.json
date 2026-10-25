@@ -1,0 +1,100 @@
+{
+  "base": "https://codeberg.org/chanray-dharma-archive/buddhist-public-domain-texts/raw/commit/5982e9b74907248beb833a0bafd1163c2d7ce3fe",
+  "scope": "sample_only_not_full_readback",
+  "verified": 18,
+  "total_files": 22176,
+  "files": [
+    {
+      "path": ".gitattributes",
+      "bytes": 8,
+      "sha256": "705fd4d6451a31d36b3df7de96f83f30ac976c9b4a6d1e51671d8e2f33e2d0da"
+    },
+    {
+      "path": "bilara-full/LICENSE.md",
+      "bytes": 322,
+      "sha256": "fb244eaafc121b9f5b14dbecb20ac407b3acf6eec8c5028fc1e3bd0afb1a6f3f"
+    },
+    {
+      "path": "bilara-full/root/pli/ms/sutta/an/an10/an10.145_root-pli-ms.json",
+      "bytes": 681,
+      "sha256": "1c796eeb567750ba61c0d317a87a468d49e811c1410d02d828731f79c9a9632d"
+    },
+    {
+      "path": "bilara-full/root/pli/ms/sutta/kn/iti/vagga1/iti3_root-pli-ms.json",
+      "bytes": 935,
+      "sha256": "6c97c53228f0e8b3f5bccb5f53aefce4dc3840cf152faa55496de342d532291e"
+    },
+    {
+      "path": "bilara-full/root/pli/ms/sutta/kn/tha-ap/tha-ap415_root-pli-ms.json",
+      "bytes": 5548,
+      "sha256": "84564e6ea600f18327670694cc5ac18c6bdd08d3de2fd3929227e0794bd42481"
+    },
+    {
+      "path": "bilara-full/root/pli/ms/sutta/sn/sn23/sn23.2_root-pli-ms.json",
+      "bytes": 2077,
+      "sha256": "1b28eb908e7d25ac5c7d32cd5e6651c6db3563f52aa3988f23b1aed6a9000d9b"
+    },
+    {
+      "path": "bilara-full/root/pli/ms/vinaya/pli-tv-bu-vb/pli-tv-bu-vb-pc/pli-tv-bu-vb-pc72_root-pli-ms.json",
+      "bytes": 5356,
+      "sha256": "fa1748630bd0450d92c2451899390152dc21c28b95ca96055305da7d5c33d43a"
+    },
+    {
+      "path": "bilara-full/translation/de/sabbamitta/sutta/an/an8/an8.11_translation-de-sabbamitta.json",
+      "bytes": 14970,
+      "sha256": "e8cc0af1f4e6fbf8f9a3fdb2a71fb2c7546a16ce9a8a0788800f7e69341fff86"
+    },
+    {
+      "path": "bilara-full/translation/de/sabbamitta/sutta/sn/sn2/sn2.29_translation-de-sabbamitta.json",
+      "bytes": 5410,
+      "sha256": "18cc43d4da22b0e2f132a57e5ccb84bd1fc0042cc21e94fde565443827eb7e95"
+    },
+    {
+      "path": "bilara-full/translation/de/site/name/sutta/an-name_translation-de-site.json",
+      "bytes": 85291,
+      "sha256": "8f1de8bb98e0962becacf62b7ddf668d4bd2f92bb4db08e502ffc3584e69c9ab"
+    },
+    {
+      "path": "bilara-full/translation/en/sujato/sutta/an/an3/an3.66_translation-en-sujato.json",
+      "bytes": 8904,
+      "sha256": "4bbf52c1ce01ae43599be6997dcb4f41410f00b561ccf70a26ea9bc1ac9992e4"
+    },
+    {
+      "path": "bilara-full/translation/en/sujato/sutta/kn/thag/thag1.96_translation-en-sujato.json",
+      "bytes": 413,
+      "sha256": "57d9f6d0f71b3195986614a22f117394c2b77ce67d63a3a4f2c1c30950e60d48"
+    },
+    {
+      "path": "bilara-full/translation/en/sujato/sutta/sn/sn38/sn38.11_translation-en-sujato.json",
+      "bytes": 781,
+      "sha256": "dd5d4010952ce1d5562da6f710bd1f894b6d2f4209e4dabf43dfed944af28a63"
+    },
+    {
+      "path": "bilara-full/translation/it/giovannizappa/sutta/sn/sn1/sn1.31_translation-it-giovannizappa.json",
+      "bytes": 3053,
+      "sha256": "94be1d33ee1c66bed41cd1cd3cafc2a497ad65de341c94907b67bb0be5923098"
+    },
+    {
+      "path": "bilara-full/translation/ru/o/sutta/sn/sn36/sn36.26_translation-ru-o.json",
+      "bytes": 1819,
+      "sha256": "17f6f5e6ecdd4630bd6d0d6854be40a472d8f95eb172bd889b9121fb973237e0"
+    },
+    {
+      "path": "bilara-full/translation/ru/sv/sutta/sn/sn56/sn56.6_translation-ru-sv.json",
+      "bytes": 3123,
+      "sha256": "25ef3f76fadc40c14a19e52861f87a8b2be584d2674f34d151d8747a8d4a13d1"
+    },
+    {
+      "path": "derge-tengyur/text/213_\u0f51\u0f40\u0f62\u0f0b\u0f46\u0f42.txt",
+      "bytes": 4836467,
+      "sha256": "c708b84751f755128d8f68efc031fd66bdaaefc9ce24bd890f95c39aa5bd8675"
+    },
+    {
+      "path": "manifest-sha256.txt",
+      "bytes": 3220546,
+      "sha256": "626dcb62883a5488c79bc14cf2cca986d929d94a7aeae6f295ddf38affd6289d"
+    }
+  ],
+  "ok": true,
+  "time_utc": "2026-10-23T10:54:18.442549+00:00"
+}

@@ -1,11 +1,18 @@
 const select = (selector) => document.querySelector(selector);
 const config = window.ARCHIVE_CONFIG || {};
 const languageNames = { lzh: '汉文', pli: '巴利文', san: '梵文', pra: '普拉克里特诸语', bod: '藏文', zh: '中文译文', en: '英语', de: '德语', fr: '法语', ru: '俄语', ja: '日语', ko: '韩语', vi: '越南语' };
-const state = { catalog: [], filtered: [], page: 0, pageSize: 40, packages: [], packageLimit: 40 };
+const state = { catalog: [], filtered: [], page: 0, pageSize: 40, packages: [], packageLimit: 40, mirrors: { files: {}, rules: [] } };
 const number = new Intl.NumberFormat('zh-CN');
 const localURL = (path) => new URL(path, document.baseURI).href;
 const backendURL = (path) => config.apiBase ? `${config.apiBase.replace(/\/$/, '')}/${path}` : localURL(path);
 const fileURL = (path) => config.apiBase && location.hostname.endsWith('github.io') ? backendURL(path) : localURL(path);
+
+function mirrorURLs(path) {
+  return [
+    ...(state.mirrors.files?.[path] || []).map((entry) => entry.url),
+    ...(state.mirrors.rules || []).filter((rule) => path.startsWith(rule.prefix)).map((rule) => `${rule.base.replace(/\/$/, '')}/${path}`),
+  ];
+}
 
 async function loadJSON(path, endpoint) {
   const urls = config.apiBase ? (endpoint ? [backendURL(endpoint), localURL(path)] : [localURL(path), backendURL(path)]) : [localURL(path)];
@@ -80,9 +87,6 @@ async function openReader(record) {
   if (!select('#reader').open) select('#reader').showModal();
   try {
     const bytes = await readTextBytes(record);
-    const digest = await crypto.subtle.digest('SHA-256', bytes);
-    const actual = Array.from(new Uint8Array(digest), (value) => value.toString(16).padStart(2, '0')).join('');
-    if (actual !== record.text_sha256) throw new Error('文本校验不一致，请改从其他镜像读取。');
     if (current !== readerRequest) return;
     if (select('#download-text').dataset.objectUrl) URL.revokeObjectURL(select('#download-text').dataset.objectUrl);
     const objectUrl = URL.createObjectURL(new Blob([bytes], { type: 'text/plain;charset=utf-8' }));
@@ -99,7 +103,7 @@ async function openReader(record) {
 async function readTextBytes(record) {
   const path = record.text_storage === 'zip-member' ? record.package_path : record.text_path;
   const rawGitHub = `${config.repository.replace('https://github.com/', 'https://raw.githubusercontent.com/')}/main/public/${path}`;
-  const urls = [...new Set([fileURL(path), localURL(path), ...(config.apiBase ? [backendURL(path)] : []), rawGitHub])];
+  const urls = [...new Set([fileURL(path), localURL(path), ...(config.apiBase ? [backendURL(path)] : []), ...mirrorURLs(path), rawGitHub])];
   let failure;
   for (const url of urls) {
     try {
@@ -107,11 +111,17 @@ async function readTextBytes(record) {
       const response = await fetch(url, { headers });
       if (!response.ok) throw new Error('文件镜像暂时不可用');
       const received = await response.arrayBuffer();
-      if (record.text_storage !== 'zip-member') return received;
-      const compressed = response.status === 206 ? received : received.slice(record.text_zip_offset, record.text_zip_offset + record.text_zip_size);
-      if (record.text_zip_method === 0) return compressed;
-      if (record.text_zip_method !== 8) throw new Error('请下载 ZIP 包后使用解压工具读取');
-      return await new Response(new Blob([compressed]).stream().pipeThrough(new DecompressionStream('deflate-raw'))).arrayBuffer();
+      let bytes = received;
+      if (record.text_storage === 'zip-member') {
+        const compressed = response.status === 206 ? received : received.slice(record.text_zip_offset, record.text_zip_offset + record.text_zip_size);
+        if (record.text_zip_method === 0) bytes = compressed;
+        else if (record.text_zip_method === 8) bytes = await new Response(new Blob([compressed]).stream().pipeThrough(new DecompressionStream('deflate-raw'))).arrayBuffer();
+        else throw new Error('请下载 ZIP 包后使用解压工具读取');
+      }
+      const digest = await crypto.subtle.digest('SHA-256', bytes);
+      const actual = Array.from(new Uint8Array(digest), (value) => value.toString(16).padStart(2, '0')).join('');
+      if (actual !== record.text_sha256) throw new Error('文本校验不一致，请改从其他镜像读取。');
+      return bytes;
     } catch (error) { failure = error; }
   }
   throw failure || new Error('读取失败，请下载原件恢复包');
@@ -140,6 +150,12 @@ function renderPackages() {
     link.href = fileURL(item.path);
     link.download = '';
     row.append(info, link);
+    const alternative = mirrorURLs(item.path)[0];
+    if (alternative) {
+      const backup = element('a', 'GitHub ↗');
+      backup.href = alternative;
+      row.append(backup);
+    }
     fragment.append(row);
   }
   select('#package-list').replaceChildren(fragment);
@@ -161,14 +177,16 @@ window.addEventListener('hashchange', showTab);
 showTab();
 
 async function start() {
-  const [catalogIndex, status, packages] = await Promise.all([
+  const [catalogIndex, status, packages, mirrors] = await Promise.all([
     loadJSON('data/catalog.json', 'api/catalog'),
     loadJSON('data/status.json', 'api/status'),
     loadJSON('data/packages.json', 'api/packages'),
+    loadJSON('data/mirrors.json').catch(() => ({ files: {}, rules: [] })),
   ]);
   const catalog = Array.isArray(catalogIndex) ? catalogIndex : (await Promise.all(catalogIndex.chunks.map((path) => loadJSON(path)))).flat();
   state.catalog = catalog;
   state.packages = packages;
+  state.mirrors = mirrors;
   select('#stat-documents').textContent = number.format(status.documents);
   select('#stat-languages').textContent = Object.keys(status.languages).length;
   select('#stat-packages').textContent = number.format(status.packages);
