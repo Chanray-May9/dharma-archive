@@ -17,6 +17,14 @@
 
 ## 不依赖前端的访问
 
+### 网页入口
+
+首页、经藏目录 `library.html`、全部语种 `languages.html`、下载 `packages.html`、恢复工具 `recovery.html` 和阅读 `reader.html?id=...` 均为独立 HTML 页面，支持 GitHub Pages 子路径、刷新与直达链接。源码模板位于 `frontend/`；运行 `python tools/build_frontend.py` 生成页面。
+
+汉文默认简体显示，可切换原文；简体与繁体经名均可检索。简体文本由仓库内固定版本的 OpenCC 在阅读时转换，下载按钮提供当前显示版本；转换结果不冒充另一种校勘版本，也不会覆盖原始文本、ZIP 或纠错数据。转换组件与许可证一并存于 `public/vendor/`，不依赖外部 CDN。
+
+所有已收录的经文原件实际包含在账号 `Chanray-May9` 的两个数据仓库的 ZIP 文件中，纠错数据在同账号的纠错仓库中；不是只指向上游机构仓库的索引。阅读接口只请求这些自有分片或自有 Cloudflare 镜像。“对照上游来源”仅供溯源，不是经文加载或下载的来源。
+
 - GitHub 仓库：<https://github.com/Chanray-May9/dharma-archive>
 - GitHub Pages：<https://chanray-may9.github.io/dharma-archive/>
 - Codeberg 公版 / CC0 原典子集：<https://codeberg.org/chanray-dharma-archive/buddhist-public-domain-texts>

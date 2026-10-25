@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#1686e9">
+  <meta name="description" content="佛典原件、简体阅读与独立恢复包。">
+  <title>经藏目录 · 经藏</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="theme-blue.css">
+  <link rel="stylesheet" href="routes.css">
+  <script src="config.js"></script>
+  <script src="vendor/opencc-1.4.2.js"></script>
+  <script type="module" src="app.js"></script>
+</head>
+<body data-page="library">
+  <a class="skip" href="#main">跳至内容</a>
+  <aside class="sidebar">
+    <a class="brand" href="index.html"><span class="seal" aria-hidden="true">经</span><span>经藏<small>开放佛典档案</small></span></a>
+    <nav aria-label="主导航">
+      <a href="library.html" data-page-link="library">经藏目录</a>
+      <a href="languages.html" data-page-link="languages">收录语种</a>
+      <a href="packages.html" data-page-link="packages">下载与镜像</a>
+      <a href="recovery.html" data-page-link="recovery">恢复工具</a>
+    </nav>
+    <div class="sidebar-bottom"><a href="https://github.com/Chanray-May9/dharma-archive">我的档案仓库 ↗</a></div>
+  </aside>
+  <main id="main">
+    <header class="topbar"><a href="index.html">经藏 / OPEN BUDDHIST ARCHIVE</a><a href="library.html?language=lzh&amp;script=simplified">简体经文 ↗</a></header>
+    <section aria-labelledby="library-title">
+  <div class="section-head"><h1 id="library-title" class="page-title">经藏目录</h1><p id="results-count" aria-live="polite">载入中</p></div>
+  <form id="search-form" class="filters" action="library.html" method="get" role="search">
+    <label class="search"><input id="search" name="q" type="search" placeholder="经名、编号或译者，例如：心经、金刚、dn1" aria-label="搜索经名、编号或译者"></label>
+    <label><span class="sr-only">语种</span><select id="language" name="language"><option value="">全部语种</option></select></label>
+    <label><span class="sr-only">经藏</span><select id="collection" name="collection"><option value="">全部经藏</option></select></label>
+    <button type="submit">检索</button>
+  </form>
+  <div class="display-toolbar"><label for="script-mode">汉字显示</label><select id="script-mode"><option value="simplified">简体阅读</option><option value="original">原文显示</option></select><a href="languages.html">查看全部语种 →</a></div>
+  <div class="table-wrap"><table><thead><tr><th>文献</th><th>语种</th><th>经藏</th><th>访问</th></tr></thead><tbody id="catalog-body"></tbody></table></div>
+  <p id="empty" hidden>没有匹配的文献。</p>
+  <div class="pagination"><button id="previous" disabled>← 上一页</button><span id="page-number"></span><button id="next" disabled>下一页 →</button></div>
+</section>
+
+    <p id="page-error" role="alert" hidden></p>
+    <footer><span>经藏 · 佛典留存计划</span><a href="data/catalog.csv">下载完整目录 CSV ↗</a><a href="RECOVERY.txt">离线恢复说明 ↗</a></footer>
+  </main>
+  <noscript><p>可直接下载 <a href="data/catalog.csv">经文目录</a>，或查看 <a href="RECOVERY.txt">恢复说明</a>。</p></noscript>
+</body>
+</html>

@@ -1,0 +1,13 @@
+<section aria-labelledby="library-title">
+  <div class="section-head"><h1 id="library-title" class="page-title">经藏目录</h1><p id="results-count" aria-live="polite">载入中</p></div>
+  <form id="search-form" class="filters" action="library.html" method="get" role="search">
+    <label class="search"><input id="search" name="q" type="search" placeholder="经名、编号或译者，例如：心经、金刚、dn1" aria-label="搜索经名、编号或译者"></label>
+    <label><span class="sr-only">语种</span><select id="language" name="language"><option value="">全部语种</option></select></label>
+    <label><span class="sr-only">经藏</span><select id="collection" name="collection"><option value="">全部经藏</option></select></label>
+    <button type="submit">检索</button>
+  </form>
+  <div class="display-toolbar"><label for="script-mode">汉字显示</label><select id="script-mode"><option value="simplified">简体阅读</option><option value="original">原文显示</option></select><a href="languages.html">查看全部语种 →</a></div>
+  <div class="table-wrap"><table><thead><tr><th>文献</th><th>语种</th><th>经藏</th><th>访问</th></tr></thead><tbody id="catalog-body"></tbody></table></div>
+  <p id="empty" hidden>没有匹配的文献。</p>
+  <div class="pagination"><button id="previous" disabled>← 上一页</button><span id="page-number"></span><button id="next" disabled>下一页 →</button></div>
+</section>

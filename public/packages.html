@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#1686e9">
+  <meta name="description" content="佛典原件、简体阅读与独立恢复包。">
+  <title>下载与镜像 · 经藏</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="theme-blue.css">
+  <link rel="stylesheet" href="routes.css">
+  <script src="config.js"></script>
+  <script src="vendor/opencc-1.4.2.js"></script>
+  <script type="module" src="app.js"></script>
+</head>
+<body data-page="packages">
+  <a class="skip" href="#main">跳至内容</a>
+  <aside class="sidebar">
+    <a class="brand" href="index.html"><span class="seal" aria-hidden="true">经</span><span>经藏<small>开放佛典档案</small></span></a>
+    <nav aria-label="主导航">
+      <a href="library.html" data-page-link="library">经藏目录</a>
+      <a href="languages.html" data-page-link="languages">收录语种</a>
+      <a href="packages.html" data-page-link="packages">下载与镜像</a>
+      <a href="recovery.html" data-page-link="recovery">恢复工具</a>
+    </nav>
+    <div class="sidebar-bottom"><a href="https://github.com/Chanray-May9/dharma-archive">我的档案仓库 ↗</a></div>
+  </aside>
+  <main id="main">
+    <header class="topbar"><a href="index.html">经藏 / OPEN BUDDHIST ARCHIVE</a><a href="library.html?language=lzh&amp;script=simplified">简体经文 ↗</a></header>
+    <section aria-labelledby="packages-title">
+  <h1 id="packages-title" class="page-title">下载与镜像</h1>
+  <p class="section-intro">ZIP 包含经文原件、阅读文本和校验清单。以下数据仓库均属于你的账号，存放实际文件，不是上游仓库的引导链接。</p>
+  <div class="mirror-grid"><a href="https://github.com/Chanray-May9/dharma-archive-data-001">GitHub 数据仓库 1<span>实际 ZIP 文件 · Chanray-May9 ↗</span></a><a href="https://github.com/Chanray-May9/dharma-archive-data-002">GitHub 数据仓库 2<span>实际 ZIP 与上游完整快照分片 · Chanray-May9 ↗</span></a><a href="https://github.com/Chanray-May9/dharma-archive-recovery">GitHub 纠错仓库<span>实际 PAR2 文件 · Chanray-May9 ↗</span></a><a href="https://archive.org/details/chanray-dharma-archive-buddhist-texts-20261023">Internet Archive 完整副本<span>你创建的归档条目 · 实际 TAR 分片 ↗</span></a><a href="https://codeberg.org/chanray-dharma-archive/buddhist-public-domain-texts">Codeberg 原典副本<span>你的账号 · 公版与 CC0 原典子集 ↗</span></a><a href="data/catalog.csv">完整文献目录<span>CSV 下载 ↗</span></a></div>
+  <div class="package-toolbar"><label for="package-search">筛选恢复包</label><input id="package-search" type="search" placeholder="例如 cbeta-T08 或 sc-pli"></div>
+  <div id="package-list"></div><button id="more-packages" hidden>显示更多恢复包</button>
+</section>
+
+    <p id="page-error" role="alert" hidden></p>
+    <footer><span>经藏 · 佛典留存计划</span><a href="data/catalog.csv">下载完整目录 CSV ↗</a><a href="RECOVERY.txt">离线恢复说明 ↗</a></footer>
+  </main>
+  <noscript><p>可直接下载 <a href="data/catalog.csv">经文目录</a>，或查看 <a href="RECOVERY.txt">恢复说明</a>。</p></noscript>
+</body>
+</html>

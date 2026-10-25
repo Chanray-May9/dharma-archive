@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#1686e9">
+  <meta name="description" content="佛典原件、简体阅读与独立恢复包。">
+  <title>经文阅读 · 经藏</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="theme-blue.css">
+  <link rel="stylesheet" href="routes.css">
+  <script src="config.js"></script>
+  <script src="vendor/opencc-1.4.2.js"></script>
+  <script type="module" src="app.js"></script>
+</head>
+<body data-page="reader">
+  <a class="skip" href="#main">跳至内容</a>
+  <aside class="sidebar">
+    <a class="brand" href="index.html"><span class="seal" aria-hidden="true">经</span><span>经藏<small>开放佛典档案</small></span></a>
+    <nav aria-label="主导航">
+      <a href="library.html" data-page-link="library">经藏目录</a>
+      <a href="languages.html" data-page-link="languages">收录语种</a>
+      <a href="packages.html" data-page-link="packages">下载与镜像</a>
+      <a href="recovery.html" data-page-link="recovery">恢复工具</a>
+    </nav>
+    <div class="sidebar-bottom"><a href="https://github.com/Chanray-May9/dharma-archive">我的档案仓库 ↗</a></div>
+  </aside>
+  <main id="main">
+    <header class="topbar"><a href="index.html">经藏 / OPEN BUDDHIST ARCHIVE</a><a href="library.html?language=lzh&amp;script=simplified">简体经文 ↗</a></header>
+    <article id="reader" class="reader-page"><div class="reader-top"><a id="back-to-library" href="library.html">← 返回目录</a><span id="reader-id"></span></div><h1 id="reader-title" class="page-title">正在载入经文</h1><div class="display-toolbar"><label for="script-mode">汉字显示</label><select id="script-mode"><option value="simplified">简体阅读</option><option value="original">原文显示</option></select></div><div class="reader-links"><a id="download-text" download>下载 TXT ↓</a><a id="download-original">下载原件恢复包 ↓</a><a id="original-source" target="_blank" rel="noreferrer">对照上游来源 ↗</a></div><p id="reader-state" role="status"></p><pre id="reader-text"></pre></article>
+
+    <p id="page-error" role="alert" hidden></p>
+    <footer><span>经藏 · 佛典留存计划</span><a href="data/catalog.csv">下载完整目录 CSV ↗</a><a href="RECOVERY.txt">离线恢复说明 ↗</a></footer>
+  </main>
+  <noscript><p>可直接下载 <a href="data/catalog.csv">经文目录</a>，或查看 <a href="RECOVERY.txt">恢复说明</a>。</p></noscript>
+</body>
+</html>
